@@ -8,10 +8,12 @@ import { SEO_INDEX_TITLE } from "@/messages/seo";
 // Interface & Types & Enums
 import { APIError, Quizz } from "@/ts/interfaces";
 import { APIMethods, APIEndpoints } from "@/ts/enums";
+import { ReactElement } from "react";
 // Components
 const PageHeading = dynamic(() => import("@/components/PageHeading"));
 const Quizzes = dynamic(() => import("@/components/Quizzes"));
 const PageSEO = dynamic(() => import("@/components/PageSEO"));
+const Layout = dynamic(() => import("@/components/AppLayout"));
 
 interface HomeProps {
   quizzes:
@@ -49,4 +51,8 @@ export const getStaticProps = async () => {
     },
     revalidate: 3600,
   };
+};
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };

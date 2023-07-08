@@ -10,7 +10,7 @@ interface PageHeadingProps {
 const PageHeading = ({
   className = "",
   title = "",
-  description = "cao cao cao cao cao",
+  description,
 }: PageHeadingProps) => {
   return (
     <div

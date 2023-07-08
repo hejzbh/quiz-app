@@ -3,6 +3,8 @@ import React from "react";
 import dynamic from "next/dynamic";
 // Components
 const NoQuizzes = dynamic(() => import("@/components/NoQuizzes"));
+const Container = dynamic(() => import("@/components/Container"));
+const Quizz = dynamic(() => import("@/components/Quizzes/Quizz"));
 // Interface
 import { Quizz } from "@/ts/interfaces";
 interface QuizzessProps {
@@ -14,7 +16,13 @@ const Quizzes = ({ quizzes, errorMsg }: QuizzessProps) => {
   if (quizzes?.length === 0 || errorMsg)
     return <NoQuizzes errorMsg={errorMsg} />;
 
-  return <div>Quizzes</div>;
+  return (
+    <Container className="flex flex-col space-y-5">
+      {quizzes?.map((quizz) => (
+        <Quizz quizz={quizz} key={quizz.id} />
+      ))}
+    </Container>
+  );
 };
 
 export default Quizzes;

@@ -1,7 +1,12 @@
 import "@/styles/globals.css";
+import { ReactElement } from "react";
 // Next
-import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
+// Interface
+interface AppProps {
+  Component: any;
+  pageProps: any;
+}
 
 const poppinsFont = Poppins({
   subsets: ["latin-ext"],
@@ -9,9 +14,11 @@ const poppinsFont = Poppins({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
+
   return (
     <div className={poppinsFont?.className}>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </div>
   );
 }

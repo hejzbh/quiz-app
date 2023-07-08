@@ -28,13 +28,15 @@ const Button = ({
   iconClassName = "",
   className = "",
 }: ButtonProps) => {
-  if (type === ButtonTypes.BUTTON) {
+  if (type === ButtonTypes.BUTTON || type === ButtonTypes.SUBMIT) {
     return (
       <button
         onClick={onClick}
-        type="button"
+        type={ButtonTypes?.BUTTON ? "button" : "submit"}
         title={title}
-        className={`${keepDefaultClassName && BUTTON_CLASSNANE} ${className}`}
+        className={`${
+          keepDefaultClassName && BUTTON_CLASSNANE
+        } ${className} cursor-pointer`}
       >
         {onlyIcon ? null : title}
         {Icon && <Icon className={iconClassName} />}

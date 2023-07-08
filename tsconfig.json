@@ -20,6 +20,11 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/Forms/QuizzDetails/Questions/Question.stsx"
+  ],
   "exclude": ["node_modules"]
 }

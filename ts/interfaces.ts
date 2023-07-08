@@ -1,10 +1,10 @@
 // Types
-import { MethodAPI, EndpointAPI } from "./types";
+import { MethodAPI, EndpointAPI, FieldType } from "./types";
 
 export interface FetchAPIParams {
   method: MethodAPI;
   endpoint: EndpointAPI;
-  id?: string; // We will provide ID to "FetchAPI" function in case that we are trying to delete or edit quizz.
+  id?: string | null; // We will provide ID to "FetchAPI" function in case that we are trying to delete or edit quizz.
   data?: Quizz | undefined;
   errorMsg?: string;
 }
@@ -16,7 +16,7 @@ export interface Quizz {
 }
 
 export interface Question {
-  id: string;
+  id: string | number;
   question: string;
   answer: string;
 }
@@ -24,4 +24,25 @@ export interface Question {
 export interface APIError {
   result: null;
   errorMsg?: string;
+}
+
+export interface QuizzFormField {
+  type: FieldType;
+  Component?: React.FC;
+  name: string;
+  key: number;
+  placeholder: string;
+  Tab: string;
+  testValidation?: () => boolean;
+  testValidationProps?: any;
+}
+
+export interface NavLink {
+  name: string;
+  href: string;
+}
+
+export interface SaveInLocalStorageParams {
+  name: string;
+  value: any;
 }
