@@ -46,8 +46,10 @@ const QuizzDetails = ({
 
   useEffect(() => {
     if (!type) return;
-    getSavedQuizzData(type); // eslint-disable-line (We cant await async function inside useEffect, it is unnecessary too)
-  }, [type]);
+    //(We cant await async function inside useEffect, it is unnecessary too)
+    getSavedQuizzData(type); // eslint-disable-line
+  }, [type]); // eslint-disable-line
+  // If we pass getSavedQuizzData to dependency array, useEffect can be called more than once
 
   const getSavedQuizzData = async (quizzId: string) => {
     // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent unused code
@@ -292,7 +294,7 @@ const QuizzDetails = ({
           }
         )}
       </div>
-      {quizzData?.questions?.length > 0 && (
+      {quizzData?.questions && quizzData?.name && (
         <Actions enableSubmit onSubmit={submitQuizz} />
       )}
     </div>

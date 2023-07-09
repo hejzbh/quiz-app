@@ -14,8 +14,8 @@ const Question = dynamic(() => import("./Question"));
 // Interface
 interface QuestionsProps {
   questions: { id: string; answer: string; question: string }[];
-  onChange: (question: Question) => void;
-  onQuestionDelete: (deletedQuestion: Question) => void;
+  onChange: (question: Question) => void; // eslint-disable-line
+  onQuestionDelete: (deletedQuestion: Question) => void; // eslint-disable-line
   onDeleteAll: () => void;
 }
 const Questions = ({

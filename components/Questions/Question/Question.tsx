@@ -7,8 +7,8 @@ const Toolbar = dynamic(() => import("@/components/Toolbar"));
 import { Question } from "@/ts/interfaces";
 interface QuestionProps {
   question: Question;
-  onQuestionToggleEdit: (question: Question) => void;
-  onQuestionToggleDelete: (question: Question) => void;
+  onQuestionToggleEdit: (question: Question) => void; // eslint-disable-line
+  onQuestionToggleDelete: (question: Question) => void; // eslint-disable-line
 }
 const Question = ({
   question,

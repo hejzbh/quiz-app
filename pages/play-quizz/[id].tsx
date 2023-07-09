@@ -1,12 +1,10 @@
-
 // React
 import React, { ReactElement } from "react";
 // Next
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import { GetStaticPropsContext } from "next";
 // SEO messages
-import { SEO_EDIT_QUIZZ } from "@/messages/seo";
+import { SEO_PLAY_QUIZZ } from "@/messages/seo";
 // API
 import { fetchAPI } from "@/api/fetchAPI";
 // Enums & Interfaces
@@ -15,7 +13,6 @@ import { APIError, Quizz } from "@/ts/interfaces";
 // Components
 const PageHeading = dynamic(() => import("@/components/PageHeading"));
 const PageSEO = dynamic(() => import("@/components/PageSEO"));
-const QuizzDetails = dynamic(() => import("@/components/Forms/QuizzDetails"));
 const Container = dynamic(() => import("@/components/Container"));
 const NotFound = dynamic(() => import("@/components/NoResultsFound"));
 const Layout = dynamic(() => import("@/components/AppLayout"));
@@ -25,18 +22,16 @@ interface QuizzPageProps {
 }
 
 const QuizzPage = ({ quizzDetails }: QuizzPageProps) => {
-  const router = useRouter();
   return (
     <>
-      <PageSEO title={(quizzDetails as Quizz)?.name || SEO_EDIT_QUIZZ} />
-      <PageHeading title={(quizzDetails as Quizz)?.name || "Not found"} />
+      <PageSEO title={(quizzDetails as Quizz)?.name || SEO_PLAY_QUIZZ} />
+      <PageHeading
+        title={(quizzDetails as Quizz)?.name || "Not found"}
+        description="Good Luck!"
+      />
       <Container>
         {quizzDetails ? (
-          <QuizzDetails
-            type="edit"
-            data={quizzDetails as Quizz}
-            onSubmit={()=>router.replace(router.asPath)}
-          />
+          <h1>Play quizz</h1>
         ) : (
           <NotFound title="Quizz not found" />
         )}

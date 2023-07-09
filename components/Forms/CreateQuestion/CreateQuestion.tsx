@@ -10,12 +10,10 @@ interface CreateQuestionProps {
   type: "add" | "edit";
   questionData?: Question; // required if type is EDIT
   onSubmit: (question: any) => void; // eslint-disable-line
-  onChange?: (question: any) => void; // required if type is EDIT  // eslint-disable-line
 }
 
 const CreateQuestion = ({
   onSubmit = () => {},
-  onChange = () => {},
   type = "add",
   questionData,
 }: CreateQuestionProps) => {
@@ -33,10 +31,6 @@ const CreateQuestion = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (type === "edit" && onChange) {
-      onChange({ ...questionData, [name]: value });
-    }
 
     setQuestion((question: Question) => ({
       ...question,
