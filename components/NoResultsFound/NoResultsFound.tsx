@@ -23,7 +23,9 @@ const NoResultsFound = ({
         height={280}
       />
       {/** Title */}
-      <h2 className="text-blueOne text-3xl drop-shadow-sm">{title}</h2>
+      <h2 className="text-blueOne text-2xl md:text-3xl drop-shadow-sm text-center">
+        {title}
+      </h2>
       {/** Info message or error message */}
       {description && (
         <p className="mt-2 text-gray-600 text-lg drop-shadow-sm">
