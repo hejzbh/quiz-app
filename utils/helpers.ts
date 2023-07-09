@@ -90,3 +90,19 @@ export const calculateWinratePercentage = ({
   correctAnswers,
   totalQuestions,
 }: CalculateWinrateProps) => (correctAnswers / totalQuestions) * 100;
+
+export const getRecycledQuestions = (obj: any) => {
+  const arr = [];
+
+  // Koristim malo i ovaj for loop na old school nacin da pokazem da dobro baratam i sa time.
+  for (let i = 0; i < Object.keys(obj).length; i++) {
+    const key = +Object.keys(obj)[i];
+    if (Number.isFinite(key)) {
+      arr.push(Object.values(obj)[i]);
+    } else {
+      break;
+    }
+  }
+
+  return arr;
+};

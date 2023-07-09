@@ -9,6 +9,7 @@ import { fetchAPI } from "@/api/fetchAPI";
 // INterfaces & Enums
 import { APIEndpoints, APIMethods } from "@/ts/enums";
 import { Question } from "@/ts/interfaces";
+import { getRecycledQuestions } from "@/utils/helpers";
 // Components
 const PageHeading = dynamic(() => import("@/components/PageHeading"));
 const PageSEO = dynamic(() => import("@/components/PageSEO"));
@@ -21,6 +22,7 @@ interface CreateQuizzPage {
 }
 
 const CreateQuizzPage = ({ recycledQuestions }: CreateQuizzPage) => {
+  console.log(recycledQuestions);
   return (
     <>
       <PageSEO title={SEO_CREATE_QUIZZ_TITLE} />
@@ -43,13 +45,15 @@ export const getStaticProps = async () => {
     method: APIMethods.GET,
     endpoint: APIEndpoints.getRecycledQuestions,
   });
-
+  console.log(recycledQuestions);
   return {
     props: {
-      recycledQuestions: recycledQuestions?.result?.map(
-        (question: any) => question["0"]
-      ),
-      // Ovo sam morao uraditi na ovaj nacin jer mockup koji trenutno koristim ne sadrži funckiju da pusham array payload koij sadrzi questions i poreda te questions u value, ...payload, vec mi vraca za svaik objekat, question unutar njega. Tesko za objasniti...
+      recycledQuestions:
+        recycledQuestions?.result?.flatMap((question: any) =>
+          getRecycledQuestions(question)
+        ) || null,
+      // Ovo sam morao uraditi na ovaj nacin jer mockup koji trenutno koristim ne sadrži funckiju da pusham array payload koij sadrzi questions i poreda te questions kao zaseebne objekte, ...payload, vec mi vraca za u jednom objektu sve questions pod brojevima 0, 1, 2, tj. po array indexs. Tesko za objasniti...
+      // Ovo sam mogao sprijecit na nacin da mapiram questionse i da za svaki question pravim request da ga pusha na /questions api endpoint, ali to bi usporilo aplikaciju.
     },
     revalidate: 3600,
   };
