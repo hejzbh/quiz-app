@@ -6,8 +6,11 @@ import { useRouter } from "next/router";
 const NoQuizzes = dynamic(() => import("@/components/NoQuizzes"));
 const Container = dynamic(() => import("@/components/Container"));
 const Quizz = dynamic(() => import("@/components/Quizzes/Quizz"));
+const Button = dynamic(() => import("@/components/ui/Button"));
+// Urls
+import { createQuizzURL } from "@/utils/urls";
 // Interface & Enums
-import { APIEndpoints, APIMethods } from "@/ts/enums";
+import { APIEndpoints, APIMethods, ButtonTypes } from "@/ts/enums";
 import { Quizz } from "@/ts/interfaces";
 interface QuizzessProps {
   quizzes: Quizz[];
@@ -50,9 +53,20 @@ const Quizzes = ({ quizzes, errorMsg }: QuizzessProps) => {
 
   return (
     <Container className="flex flex-col space-y-5">
-      {quizzes?.map((quizz) => (
-        <Quizz quizz={quizz} key={quizz.id} onQuizzDelete={deleteQuizz} />
-      ))}
+      {/** Create new Quizz */}
+      <Button
+        title="Create quizz"
+        type={ButtonTypes.LINK}
+        href={createQuizzURL()}
+        keepDefaultClassName
+        className="max-w-[150px]"
+      />
+      {/** Quizzess */}
+      <div>
+        {quizzes?.map((quizz) => (
+          <Quizz quizz={quizz} key={quizz.id} onQuizzDelete={deleteQuizz} />
+        ))}
+      </div>
     </Container>
   );
 };
