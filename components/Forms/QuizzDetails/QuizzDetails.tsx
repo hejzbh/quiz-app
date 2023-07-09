@@ -21,12 +21,14 @@ interface QuizzDetailsProps {
   type: "edit" | "add";
   data?: { name: string; questions: Question[]; id: string };
   onSubmit?: () => void;
+  recycledQuestions?: Question[];
 }
 
 const QuizzDetails = ({
   type,
   data,
   onSubmit = () => {},
+  recycledQuestions = [],
 }: QuizzDetailsProps) => {
   const [quizzId, setQuizzId] = useState<any>(Math.random());
   const [quizzData, setQuizzData] = useState<{
@@ -204,8 +206,21 @@ const QuizzDetails = ({
     });
   };
 
+  const handleSetRecycledQuestions = (
+    selectedRecycledQuestions: Question[]
+  ) => {
+    setQuizzData((quizzData) => ({
+      ...quizzData,
+      questions: [...quizzData?.questions, ...selectedRecycledQuestions],
+    }));
+  };
+
   const submitQuizz = async () => {
     try {
+      if (quizzData?.questions?.length === 0) {
+        alert("Please add at least 1 question");
+        return;
+      }
       // Import functions (prevent unused code)
       const [fetchAPI, removeFromLocalStorage] = await Promise.all([
         import("@/api/fetchAPI").then((res) => res.fetchAPI),
@@ -214,7 +229,7 @@ const QuizzDetails = ({
         ),
       ]);
 
-      // Make api call
+      // Make api call (POST Quizz)
       await fetchAPI({
         method: type === "edit" ? APIMethods.PUT : APIMethods.POST,
         id: type === "edit" ? quizzData?.id : null,
@@ -282,8 +297,12 @@ const QuizzDetails = ({
                           questions={quizzData?.questions}
                           onChange={handleQuestionsChange}
                           onQuestionDelete={handleQuestionDelete}
+                          recycledQuestions={recycledQuestions}
                           onDeleteAll={() =>
                             handleQuestionDelete(undefined as any, true)
+                          }
+                          handleSetRecycledQuestions={
+                            handleSetRecycledQuestions
                           }
                         />
                       );

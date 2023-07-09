@@ -16,6 +16,7 @@ interface ButtonProps {
   iconClassName?: string;
   keepDefaultClassName?: boolean;
   onlyIcon?: boolean;
+  disabled?: boolean;
 }
 const Button = ({
   title = "",
@@ -26,11 +27,13 @@ const Button = ({
   keepDefaultClassName,
   onlyIcon,
   iconClassName = "",
+  disabled,
   className = "",
 }: ButtonProps) => {
   if (type === ButtonTypes.BUTTON || type === ButtonTypes.SUBMIT) {
     return (
       <button
+        disabled={disabled}
         onClick={onClick}
         type={ButtonTypes?.BUTTON ? "button" : "submit"}
         title={title}

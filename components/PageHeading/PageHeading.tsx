@@ -18,7 +18,7 @@ const PageHeading = ({
     >
       {/** Title & Description */}
       <div className="text-center min-h-[20vh] flex items-center justify-center flex-col">
-        <h1 className="text-white text-[55px] drop-shadow-md font-semibold uppercase">
+        <h1 className="text-white text-[35px] sm:text-[42px] md:text-[55px] drop-shadow-md font-semibold uppercase">
           {title}
         </h1>
         {description && (

@@ -46,3 +46,14 @@ export interface SaveInLocalStorageParams {
   name: string;
   value: any;
 }
+
+export interface MakeArrayUniqueParams {
+  unique: any[];
+  notSameAs: any;
+  uniqueProperty?: string;
+}
+
+export interface CalculateWinrateProps {
+  correctAnswers: number;
+  totalQuestions: number;
+}

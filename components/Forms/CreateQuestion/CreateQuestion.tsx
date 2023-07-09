@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 // Next
 import dynamic from "next/dynamic";
+// NPM
+import { v4 as uuidv4 } from "uuid";
 // Components
 const Button = dynamic(() => import("@/components/ui/Button"));
 // Interface
@@ -23,9 +25,14 @@ const CreateQuestion = ({
     question: "",
   });
 
+  const createInitialQuestionData = () =>
+    ({ id: uuidv4(), answer: "", question: "" } as Question);
+
   useEffect(() => {
     if (type === "edit" && questionData) {
       setQuestion(questionData);
+    } else {
+      setQuestion(createInitialQuestionData());
     }
   }, [type, questionData]);
 

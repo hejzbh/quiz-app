@@ -3,8 +3,10 @@ import React, { ReactElement } from "react";
 // Next
 import dynamic from "next/dynamic";
 import { GetStaticPropsContext } from "next";
-// SEO messages
+// Messages
+import { GET_QUIZZ_DETAILS_ERROR } from "@/messages/errors";
 import { SEO_PLAY_QUIZZ } from "@/messages/seo";
+import { PLAY_QUIZZ_DESCRIPTION } from "@/messages/quizzes";
 // API
 import { fetchAPI } from "@/api/fetchAPI";
 // Enums & Interfaces
@@ -16,6 +18,7 @@ const PageSEO = dynamic(() => import("@/components/PageSEO"));
 const Container = dynamic(() => import("@/components/Container"));
 const NotFound = dynamic(() => import("@/components/NoResultsFound"));
 const Layout = dynamic(() => import("@/components/AppLayout"));
+const PlayQuizz = dynamic(() => import("@/components/PlayQuizz"));
 
 interface QuizzPageProps {
   quizzDetails: Quizz | APIError;
@@ -27,13 +30,13 @@ const QuizzPage = ({ quizzDetails }: QuizzPageProps) => {
       <PageSEO title={(quizzDetails as Quizz)?.name || SEO_PLAY_QUIZZ} />
       <PageHeading
         title={(quizzDetails as Quizz)?.name || "Not found"}
-        description="Good Luck!"
+        description={PLAY_QUIZZ_DESCRIPTION}
       />
       <Container>
-        {quizzDetails ? (
-          <h1>Play quizz</h1>
+        {(quizzDetails as Quizz)?.id ? (
+          <PlayQuizz quizz={quizzDetails as Quizz} />
         ) : (
-          <NotFound title="Quizz not found" />
+          <NotFound title={(quizzDetails as APIError)?.errorMsg as string} />
         )}
       </Container>
     </>
@@ -59,6 +62,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     method: APIMethods.GET,
     id: quizzID as string,
     endpoint: APIEndpoints.getQuizz,
+    errorMsg: GET_QUIZZ_DETAILS_ERROR,
   });
 
   return {

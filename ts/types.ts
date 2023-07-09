@@ -1,5 +1,9 @@
 export type MethodAPI = "POST" | "GET" | "DELETE" | "PUT";
-export type EndpointAPI = "/quizzes" | "/quizzes/";
+export type EndpointAPI =
+  | "/quizzes"
+  | "/quizzes/"
+  | "/questions"
+  | "/questions/";
 
 export type ButtonType = "LINK" | "BUTTON" | "SUBMIT";
 

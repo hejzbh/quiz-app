@@ -10,46 +10,69 @@ const Modal = dynamic(() => import("@/components/Modal"));
 const CreateQuestion = dynamic(
   () => import("@/components/Forms/CreateQuestion")
 );
+const RecycledQuestions = dynamic(
+  () => import("@/components/RecycledQuestions")
+);
 const Question = dynamic(() => import("./Question"));
 // Interface
 interface QuestionsProps {
-  questions: { id: string; answer: string; question: string }[];
+  questions: Question[];
+  recycledQuestions?: Question[];
   onChange: (question: Question) => void; // eslint-disable-line
   onQuestionDelete: (deletedQuestion: Question) => void; // eslint-disable-line
   onDeleteAll: () => void;
+  handleSetRecycledQuestions?: (selectedRecycledQuestions: Question[]) => void; // eslint-disable-line
 }
 const Questions = ({
   questions = [],
   onChange = () => {},
   onQuestionDelete,
   onDeleteAll = () => {},
+  handleSetRecycledQuestions = () => {},
+  recycledQuestions = [],
 }: QuestionsProps) => {
   const [questionModal, setQuestionModal] = useState<{
     type: "add" | "edit";
     open: boolean;
   }>({ type: "add", open: false });
+  const [openRecycledQuestions, setOpenRecycledQuestions] =
+    useState<boolean>(false);
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
   return (
     <div>
-      {/** BTN - Open modal for add question */}
-      <Button
-        title="Add question"
-        type={ButtonTypes.BUTTON}
-        onClick={() => setQuestionModal({ type: "add", open: true })}
-        keepDefaultClassName
-        className="max-w-[180px] mx-auto mt-3"
-      />
-      {/** Btn for delete questions */}
-      {questions?.length > 0 && (
+      <div className="mt-2 flex items-center justify-start flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+        {/** BTN - Open modal for add question */}
         <Button
-          title="Delete all questions"
+          title="Add question"
           type={ButtonTypes.BUTTON}
-          onClick={onDeleteAll}
-          className="max-w-[250px] ml-2 mx-auto mt-3 !bg-[red] text-white py-2 px-6 rounded-lg"
+          onClick={() => setQuestionModal({ type: "add", open: true })}
+          keepDefaultClassName
+          className="max-w-[180px] min-w-[230px] md:min-w-0"
         />
-      )}
-      {/** Question modal (for add if there are no questions or edit) */}
+
+        {/** Btn for recycled Questions */}
+        {recycledQuestions?.length > 0 && (
+          <Button
+            title="Get recycled questions"
+            type={ButtonTypes.BUTTON}
+            onClick={() => setOpenRecycledQuestions(true)}
+            keepDefaultClassName
+            className="min-w-[230px] md:min-w-0"
+          />
+        )}
+        {/** Btn for delete questions */}
+        {questions?.length > 0 && (
+          <Button
+            title="Delete all questions"
+            type={ButtonTypes.BUTTON}
+            onClick={onDeleteAll}
+            className="max-w-[250px]  !bg-[red] text-white py-2 px-6 rounded-lg min-w-[230px] md:min-w-0"
+          />
+        )}
+      </div>
+
+      {/** Question modal (for add  or edit questions) */}
       {questionModal.open && (
         <Modal onClose={() => setQuestionModal({ type: "add", open: false })}>
           <CreateQuestion
@@ -63,6 +86,21 @@ const Questions = ({
           />
         </Modal>
       )}
+
+      {/** Recycled questions MODAL */}
+      {openRecycledQuestions && recycledQuestions?.length > 0 && (
+        <Modal onClose={() => setOpenRecycledQuestions(false)}>
+          <RecycledQuestions
+            questions={recycledQuestions}
+            onSubmit={(recycledQuestions) => {
+              handleSetRecycledQuestions(recycledQuestions);
+              setOpenRecycledQuestions(false);
+            }}
+            notSameAs={questions} // We dont want to have same questions as questions we already have in our quizz
+          />
+        </Modal>
+      )}
+
       {/** Questions list */}
       <div className="flex flex-col space-y-2 mt-5">
         {questions?.map((question) => (

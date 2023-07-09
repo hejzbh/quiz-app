@@ -7,18 +7,31 @@ const Toolbar = dynamic(() => import("@/components/Toolbar"));
 import { Question } from "@/ts/interfaces";
 interface QuestionProps {
   question: Question;
-  onQuestionToggleEdit: (question: Question) => void; // eslint-disable-line
-  onQuestionToggleDelete: (question: Question) => void; // eslint-disable-line
+  onQuestionToggleEdit?: (question: Question) => void; // eslint-disable-line
+  onQuestionToggleDelete?: (question: Question) => void; // eslint-disable-line
+  disableToolbar?: boolean;
+  className?: string;
+  onQuestionSelected?: (question: Question) => void; // eslint-disable-line
+  showAnswerOnDefault?: boolean;
 }
 const Question = ({
   question,
   onQuestionToggleEdit = () => {},
   onQuestionToggleDelete = () => {},
+  disableToolbar = false,
+  className = "",
+  showAnswerOnDefault = false,
+  onQuestionSelected = () => {},
 }: QuestionProps) => {
-  const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [showAnswer, setShowAnswer] = useState<boolean>(showAnswerOnDefault);
 
   return (
-    <div className="p-2 shadow-sm rounded-lg bg-cyan-600/70 relative flex flex-col items-start justify-start">
+    <div
+      onClick={() => {
+        if (onQuestionSelected) onQuestionSelected(question);
+      }}
+      className={`p-2 shadow-sm rounded-lg bg-cyan-600/70 relative flex flex-col items-start justify-start ${className}`}
+    >
       {/** QUESTION */}
       <h2 className="text-white text-2xl drop-shadow-sm">
         {question?.question}
@@ -35,15 +48,17 @@ const Question = ({
         </span>
       )}
       {/** Question toolbar (DELETE & EDIT - options) */}
-      <Toolbar
-        className=" absolute top-2 right-2 z-10"
-        toggleEditModeStatus={() => {
-          onQuestionToggleEdit(question);
-        }}
-        onDelete={() => {
-          onQuestionToggleDelete(question);
-        }}
-      />
+      {!disableToolbar && (
+        <Toolbar
+          className=" absolute top-2 right-2 z-10"
+          toggleEditModeStatus={() => {
+            onQuestionToggleEdit(question);
+          }}
+          onDelete={() => {
+            onQuestionToggleDelete(question);
+          }}
+        />
+      )}
     </div>
   );
 };

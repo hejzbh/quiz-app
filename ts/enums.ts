@@ -4,6 +4,8 @@ export enum APIEndpoints {
   editQuizz = "/quizzes/",
   deleteQuiz = "/quizzes/",
   getQuizz = "/quizzes/",
+  getRecycledQuestions = "/questions",
+  postRecycledQuestions = "/questions/",
 }
 
 export enum APIMethods {

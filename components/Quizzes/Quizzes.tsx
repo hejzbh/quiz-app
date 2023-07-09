@@ -30,6 +30,13 @@ const Quizzes = ({ quizzes, errorMsg }: QuizzessProps) => {
         endpoint: APIEndpoints.deleteQuiz,
       });
 
+      // Make api call (POST Recycled Questions)
+      await fetchAPI({
+        method: APIMethods.POST,
+        endpoint: APIEndpoints.postRecycledQuestions,
+        data: quizzes?.find((quizz) => quizz?.id === quizzID)?.questions as any,
+      });
+
       // Refresh get static props
       router.replace(router.asPath);
     } catch (err: any) {

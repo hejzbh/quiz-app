@@ -1,4 +1,8 @@
-import { SaveInLocalStorageParams } from "@/ts/interfaces";
+import {
+  CalculateWinrateProps,
+  MakeArrayUniqueParams,
+  SaveInLocalStorageParams,
+} from "@/ts/interfaces";
 
 export const sortFieldByTabs = (fields: { Tab: string }[]) => {
   // Get tabs that are exists in fields (UNIQUE - NOT DUPLICATE); -> ["Title","Questions","Other"] for exmpl.
@@ -56,3 +60,31 @@ export const removeFromLocalStorage = (name: string) =>
 export const sameObjects = (obj1: any, obj2: any) => {
   return Object.keys(obj1).every((key) => obj2[key] === obj1[key]);
 };
+
+export const arrayIncludes = (arr: any[], value: any, property?: string) =>
+  arr?.some((arrayValue) =>
+    property ? arrayValue[property] == value[property] : arrayValue == value
+  ); // == instead of === is because i dont want to check by type, only for value, imagine situation "1" and 1, in this function that is SAME
+
+export const makeArrayUnique = ({
+  unique,
+  notSameAs,
+  uniqueProperty,
+}: MakeArrayUniqueParams) => {
+  const uniqueArray: any[] = [];
+
+  for (let i = 0; i < unique?.length; i++) {
+    const value = unique[i];
+
+    if (arrayIncludes(notSameAs, value, uniqueProperty)) continue;
+
+    uniqueArray?.push(value);
+  }
+
+  return uniqueArray;
+};
+
+export const calculateWinratePercentage = ({
+  correctAnswers,
+  totalQuestions,
+}: CalculateWinrateProps) => (correctAnswers / totalQuestions) * 100;
