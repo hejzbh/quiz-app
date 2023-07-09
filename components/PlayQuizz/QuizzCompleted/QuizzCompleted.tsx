@@ -20,7 +20,7 @@ const QuizzCompleted = ({
   totalQuestions,
 }: QuizzCompletedProps) => {
   const [isWin, setIsWin] = useState<boolean>(false);
-  const [calculationProccess, setCalculationProccess] = useState<boolean>(true);
+  const [calculationProcess, setCalculationProcess] = useState<boolean>(true);
 
   useEffect(() => {
     import("../../../utils/helpers").then(({ calculateWinratePercentage }) => {
@@ -28,25 +28,25 @@ const QuizzCompleted = ({
         correctAnswers,
         totalQuestions,
       });
-      console.log(winrate);
+
       if (winrate >= MIN_QUIZZ_WIN_PERCENTAGE) {
         setIsWin(true);
       }
 
-      setCalculationProccess(false);
+      setCalculationProcess(false);
     });
   }, [correctAnswers, totalQuestions]);
-  console.log(correctAnswers, totalQuestions);
+
   return (
     <div className="mt-3 flex flex-col space-y-2 items-center justify-center">
-      {/** Notice user that is calculation in proccess */}
-      {calculationProccess && (
+      {/** Notify the user that the calculation process is in progress*/}
+      {calculationProcess && (
         <h1 className="text-2xl text-blue-500 drop-shadow-md">
           {CALCULATION_PROCCESS}
         </h1>
       )}
       {/** Message & Review */}
-      {!calculationProccess && (
+      {!calculationProcess && (
         <div className="my-5">
           {/** Lose or win message */}
           <h2

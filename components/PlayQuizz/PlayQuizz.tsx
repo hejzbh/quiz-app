@@ -36,12 +36,12 @@ const PlayQuizz = ({ quizz }: PlayQuizzProps) => {
     // Get correct answer
     const correctAnswer = quizz?.questions[activeQuestionIdx]?.answer;
 
-    // Check is our answer correct
+    // Check is user answer correct
     const isAnswerCorrect =
       userAnswer?.toLowerCase()?.replaceAll(" ", "") ===
       correctAnswer?.toLocaleLowerCase()?.replaceAll(" ", ""); // because user can type "michaEl" but correct answer is "Michael"
 
-    // If our answer is correct, store them inside correctAnswers
+    // If the user's answer is correct, set it in correct answers
     if (isAnswerCorrect) {
       setCorrectAnswers((correctAnswers) => [
         ...correctAnswers,
@@ -59,7 +59,7 @@ const PlayQuizz = ({ quizz }: PlayQuizzProps) => {
     if (isLastQuestion) {
       endQuizz();
     } else {
-      setActiveQuestionIdx((idx) => idx + 1);
+      setActiveQuestionIdx((idx) => idx + 1); // next...
     }
   };
 
@@ -77,9 +77,11 @@ const PlayQuizz = ({ quizz }: PlayQuizzProps) => {
               onSubmit={onFormSubmit}
               className="flex flex-col justify-center items-center w-full"
             >
+              {/** Question */}
               <h2 className="text-2xl font-semibold mb-2 text-cyan-500">
                 {quizz?.questions[activeQuestionIdx]?.question}
               </h2>
+              {/** User's answer */}
               <input
                 name="answer"
                 placeholder="Answer"
@@ -90,6 +92,7 @@ const PlayQuizz = ({ quizz }: PlayQuizzProps) => {
                   "py-2 px-10 rounded-md border-[2px] mx-auto w-full max-w-[800px]  border-cyan-500 text-gray-500 outline-none"
                 }
               />
+              {/** Buttons (NEXT/FINISH & SHOW THE ANSWER) */}
               <Button
                 type={ButtonTypes.SUBMIT}
                 title={isLastQuestion ? "Finish" : "Next"}

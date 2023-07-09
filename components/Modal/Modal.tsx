@@ -13,7 +13,6 @@ const Modal = ({ children, onClose }: ModalInterface) => {
         onClick={onClose}
       ></div>
       {/** Modal content */}
-
       {children}
     </div>
   );

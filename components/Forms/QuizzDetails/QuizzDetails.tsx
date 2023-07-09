@@ -38,12 +38,12 @@ const QuizzDetails = ({
   }>({ name: "", questions: [], id: Math.random().toString() });
 
   useEffect(() => {
-    // If data doesnt exists that means we are in CREATE mode, and ID can be random number (only for storing data in localstorage);
+    // If there is no existing data (Type is add), then generate a random ID that we will use to save the data.
     if (!data) {
       setQuizzId(Math.random());
       return;
     }
-    // else, we are editing some of quizzes, and we want to load their data...
+    // Otherwise, load the data from the quiz we are editing. (Type is edit)
     setQuizzData(data);
     setQuizzId(data?.id);
   }, [data]);
@@ -53,10 +53,10 @@ const QuizzDetails = ({
     //(We cant await async function inside useEffect, it is unnecessary too)
     getSavedQuizzData(type); // eslint-disable-line
   }, [type]); // eslint-disable-line
-  // If we pass getSavedQuizzData to dependency array, useEffect can be called more than once
+  // If we include "getSavedQuizzData" in dependncy array it could potentially cause the useEffect to trigger multiple times...
 
   const getSavedQuizzData = async (quizzId: string) => {
-    // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent unused code
+    // Import the helper functions- We don't need them until the point where we call the function where they are used (prevent unused code)
     const { readFromLocalStorage } = await import("../../../utils/helpers");
 
     // Try to get saved quizz data
@@ -101,7 +101,7 @@ const QuizzDetails = ({
       [name]: value,
     }));
 
-    // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent unused code
+    // Import the helper functions- We don't need them until the point where we call the function where they are used (prevent unused code)
     const { saveInLocalStorage } = await import("../../../utils/helpers");
 
     // Save the current changes in case the user accidentally refreshes the page.
@@ -118,8 +118,7 @@ const QuizzDetails = ({
   };
 
   const handleQuestionsChange = async (question: Question) => {
-    // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent
-    // unused code
+    // Import the helper functions- We don't need them until the point where we call the function where they are used (prevent unused code)
     const { arrayValueExists, saveInLocalStorage } = await import(
       "../../../utils/helpers"
     );
@@ -178,9 +177,10 @@ const QuizzDetails = ({
     deletedQuestion: Question,
     isAll?: boolean
   ) => {
-    // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent unused code
+    // Import the helper functions- We don't need them until the point where we call the function where they are used (prevent unused code)
     const { saveInLocalStorage } = await import("../../../utils/helpers");
-    // Update quizz (delete)
+
+    // Delete that question or all questions from quizz
     setQuizzData((quizzData) => ({
       ...quizzData,
       questions: isAll
@@ -189,7 +189,8 @@ const QuizzDetails = ({
             (quizzQuestion) => quizzQuestion?.id !== deletedQuestion?.id
           ),
     }));
-    // Update local storage value for this quizz
+
+    // Save the current changes in case the user accidentally refreshes the page.
     saveInLocalStorage({
       name:
         type === "add"
@@ -217,11 +218,13 @@ const QuizzDetails = ({
 
   const submitQuizz = async () => {
     try {
+      // If there are no questions, return.
       if (quizzData?.questions?.length === 0) {
         alert("Please add at least 1 question");
         return;
       }
-      // Import functions (prevent unused code)
+
+      // Import functions- We don't need them until the point where we call the function where they are used (prevent unused code)
       const [fetchAPI, removeFromLocalStorage] = await Promise.all([
         import("@/api/fetchAPI").then((res) => res.fetchAPI),
         import("../../../utils/helpers").then(
@@ -340,6 +343,8 @@ const QuizzDetails = ({
           }
         )}
       </div>
+
+      {/** Actions  (SUBMIT) */}
       {quizzData?.questions && quizzData?.name && (
         <Actions enableSubmit onSubmit={submitQuizz} />
       )}

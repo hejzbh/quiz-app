@@ -29,9 +29,11 @@ const CreateQuestion = ({
     ({ id: uuidv4(), answer: "", question: "" } as Question);
 
   useEffect(() => {
+    // If the type is "EDIT" load the data from the question we are editing
     if (type === "edit" && questionData) {
       setQuestion(questionData);
-    } else {
+    } // otherwise (type is ADD) create initial question data (structure)
+    else {
       setQuestion(createInitialQuestionData());
     }
   }, [type, questionData]);
@@ -46,7 +48,7 @@ const CreateQuestion = ({
   };
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // prevent app from refreshing
+    e.preventDefault(); // prevent page refreshing
     if (!onSubmit) return;
 
     onSubmit(question);

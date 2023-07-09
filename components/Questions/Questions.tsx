@@ -31,12 +31,15 @@ const Questions = ({
   handleSetRecycledQuestions = () => {},
   recycledQuestions = [],
 }: QuestionsProps) => {
+  // Modal for CREATE or EDIT question
   const [questionModal, setQuestionModal] = useState<{
     type: "add" | "edit";
     open: boolean;
   }>({ type: "add", open: false });
+  // Modal for list of RECYCLED questions
   const [openRecycledQuestions, setOpenRecycledQuestions] =
     useState<boolean>(false);
+  // Question we want to edit
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
   return (
