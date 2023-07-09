@@ -77,7 +77,7 @@ const QuizzDetails = ({
   };
 
   const handleInputChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     validation?: { validationFunction: any; validationProps?: any }
   ) => {
     // Get value and name of input
@@ -304,6 +304,31 @@ const QuizzDetails = ({
                           handleSetRecycledQuestions={
                             handleSetRecycledQuestions
                           }
+                        />
+                      );
+                    case FieldTypes.TEXTAREA:
+                      return (
+                        <textarea
+                          key={field?.name}
+                          // textarea name (event.target.name)
+                          name={field?.name}
+                          // textarea value (event.target.value)
+                          value={(quizzData as any)[field?.name]}
+                          // On change
+                          onChange={(e) =>
+                            handleInputChange(e, {
+                              validationFunction: field?.testValidation,
+                              validationProps:
+                                field?.testValidationProps || null,
+                            })
+                          }
+                          // Style classname
+                          className={
+                            "py-2 resize-none px-10 rounded-md border-[2px] mx-auto w-full max-w-[400px]  border-cyan-500 text-gray-500 outline-none"
+                          }
+                          rows={8}
+                          // Label / Placeholder
+                          placeholder={field?.placeholder}
                         />
                       );
                     default:

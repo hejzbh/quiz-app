@@ -62,7 +62,7 @@ const Quizzes = ({ quizzes, errorMsg }: QuizzessProps) => {
         className="max-w-[150px]"
       />
       {/** Quizzess */}
-      <div>
+      <div className="flex flex-col space-y-3">
         {quizzes?.map((quizz) => (
           <Quizz quizz={quizz} key={quizz.id} onQuizzDelete={deleteQuizz} />
         ))}

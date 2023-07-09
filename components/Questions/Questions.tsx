@@ -48,7 +48,7 @@ const Questions = ({
           type={ButtonTypes.BUTTON}
           onClick={() => setQuestionModal({ type: "add", open: true })}
           keepDefaultClassName
-          className="max-w-[180px] min-w-[230px] md:min-w-0"
+          className="max-w-[180px] min-w-[230px] md:min-w-0 transition-all duration-200 ease-in-out hover:opacity-80"
         />
 
         {/** Btn for recycled Questions */}
@@ -58,7 +58,7 @@ const Questions = ({
             type={ButtonTypes.BUTTON}
             onClick={() => setOpenRecycledQuestions(true)}
             keepDefaultClassName
-            className="min-w-[230px] md:min-w-0"
+            className="min-w-[230px] md:min-w-0 transition-all duration-200 ease-in-out hover:opacity-80"
           />
         )}
         {/** Btn for delete questions */}
@@ -67,7 +67,7 @@ const Questions = ({
             title="Delete all questions"
             type={ButtonTypes.BUTTON}
             onClick={onDeleteAll}
-            className="max-w-[250px]  !bg-[red] text-white py-2 px-6 rounded-lg min-w-[230px] md:min-w-0"
+            className="max-w-[250px]  !bg-[red] text-white py-2 px-6 rounded-lg min-w-[230px] md:min-w-0 transition-all duration-200 ease-in-out hover:opacity-80"
           />
         )}
       </div>

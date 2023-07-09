@@ -45,7 +45,7 @@ export const getStaticProps = async () => {
     method: APIMethods.GET,
     endpoint: APIEndpoints.getRecycledQuestions,
   });
-  console.log(recycledQuestions);
+
   return {
     props: {
       recycledQuestions:

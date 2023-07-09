@@ -24,6 +24,7 @@ export enum ButtonTypes {
 export enum Tabs {
   TITLE = "Title",
   QUESTIONS = "Questions",
+  LENGTH = "Length",
 }
 
 export enum FieldTypes {
