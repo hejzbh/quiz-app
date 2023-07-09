@@ -34,7 +34,7 @@ const Quizz = ({ quizz, onQuizzDelete = () => {} }: QuizzProps) => {
         <h2 className="text-white  text-2xl">Quizz: {quizz.name}</h2>
         {/** Quizz toolbar options (PLAY,EDIT,DELETE) */}
         <Toolbar
-          className="toolbar absolute top-2 right-2 z-20"
+          className="toolbar absolute top-0 right-0 z-20 p-2"
           includePlayBTN
           onStartPlay={() => router.push(playQuizzURL(quizz?.id))}
           onDelete={() => onQuizzDelete(quizz?.id)}
