@@ -9,12 +9,15 @@ import { playQuizzURL, quizzDetailsURL } from "@/utils/urls";
 import { Quizz } from "@/ts/interfaces";
 // Components
 const Toolbar = dynamic(() => import("@/components/Toolbar"));
+
 interface QuizzProps {
   quizz: Quizz;
   onQuizzDelete: (quizzID: string) => void; // eslint-disable-line
 }
+
 const Quizz = ({ quizz, onQuizzDelete = () => {} }: QuizzProps) => {
   const router = useRouter();
+
   return (
     <Link
       href={quizzDetailsURL(quizz.id)}
@@ -27,7 +30,9 @@ const Quizz = ({ quizz, onQuizzDelete = () => {} }: QuizzProps) => {
       }}
     >
       <div className="bg-cyan-500 p-2 rounded-lg shadow-md relative">
+        {/** Quizz name */}
         <h2 className="text-white  text-2xl">Quizz: {quizz.name}</h2>
+        {/** Quizz toolbar options (PLAY,EDIT,DELETE) */}
         <Toolbar
           className="toolbar absolute top-2 right-2 z-20"
           includePlayBTN

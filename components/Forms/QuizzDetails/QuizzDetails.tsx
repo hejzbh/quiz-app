@@ -36,12 +36,14 @@ const QuizzDetails = ({
   }>({ name: "", questions: [], id: Math.random().toString() });
 
   useEffect(() => {
-    setQuizzId(Math.random());
-  }, []);
-
-  useEffect(() => {
-    if (!data) return;
+    // If data doesnt exists that means we are in CREATE mode, and ID can be random number (only for storing data in localstorage);
+    if (!data) {
+      setQuizzId(Math.random());
+      return;
+    }
+    // else, we are editing some of quizzes, and we want to load their data...
     setQuizzData(data);
+    setQuizzId(data?.id);
   }, [data]);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const QuizzDetails = ({
     // Import helpers functions - We dont need them until we call this function, so this is the best way to prevent unused code
     const { readFromLocalStorage } = await import("../../../utils/helpers");
 
-    // Try to get saved quizz data for EDIT mode
+    // Try to get saved quizz data
     if (type === "add") {
       const savedCreateQuizzData = readFromLocalStorage(
         LocalStorageKey.CREATE_QUIZZ

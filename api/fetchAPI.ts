@@ -11,8 +11,6 @@ export const fetchAPI = async ({
   errorMsg,
 }: FetchAPIParams) => {
   try {
-    console.log(data);
-    console.log("haa");
     const { data: apiResult } = await axios({
       method: method,
       url: process?.env?.NEXT_PUBLIC_API_URL + endpoint + (id ? id : ""),

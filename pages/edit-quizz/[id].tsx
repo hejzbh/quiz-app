@@ -1,4 +1,3 @@
-
 // React
 import React, { ReactElement } from "react";
 // Next
@@ -7,6 +6,8 @@ import { useRouter } from "next/router";
 import { GetStaticPropsContext } from "next";
 // SEO messages
 import { SEO_EDIT_QUIZZ } from "@/messages/seo";
+// Error messages
+import { GET_QUIZZ_DETAILS_ERROR } from "@/messages/errors";
 // API
 import { fetchAPI } from "@/api/fetchAPI";
 // Enums & Interfaces
@@ -31,14 +32,15 @@ const QuizzPage = ({ quizzDetails }: QuizzPageProps) => {
       <PageSEO title={(quizzDetails as Quizz)?.name || SEO_EDIT_QUIZZ} />
       <PageHeading title={(quizzDetails as Quizz)?.name || "Not found"} />
       <Container>
-        {quizzDetails ? (
+        {/** If we got correct quizz details render QuizzDetails component, otherwise render not found */}
+        {(quizzDetails as Quizz)?.id ? (
           <QuizzDetails
             type="edit"
             data={quizzDetails as Quizz}
-            onSubmit={()=>router.replace(router.asPath)}
+            onSubmit={() => router.replace(router.asPath)}
           />
         ) : (
-          <NotFound title="Quizz not found" />
+          <NotFound title={(quizzDetails as APIError)?.errorMsg as string} />
         )}
       </Container>
     </>
@@ -64,6 +66,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     method: APIMethods.GET,
     id: quizzID as string,
     endpoint: APIEndpoints.getQuizz,
+    errorMsg: GET_QUIZZ_DETAILS_ERROR,
   });
 
   return {

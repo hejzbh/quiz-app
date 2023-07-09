@@ -2,9 +2,10 @@
 import dynamic from "next/dynamic";
 // API
 import { fetchAPI } from "@/api/fetchAPI";
-import { GET_QUIZZES_ERROR } from "@/api/errorMsg";
-// SEO Messages
+import { GET_QUIZZES_ERROR } from "@/messages/errors";
+// Messages
 import { SEO_INDEX_TITLE } from "@/messages/seo";
+import { INDEX_TITLE, INDEX_DESCRIPTION } from "@/messages/default";
 // Interface & Types & Enums
 import { APIError, Quizz } from "@/ts/interfaces";
 import { APIMethods, APIEndpoints } from "@/ts/enums";
@@ -27,7 +28,8 @@ export default function Home({ quizzes }: HomeProps) {
   return (
     <>
       <PageSEO title={SEO_INDEX_TITLE} />
-      <PageHeading title="Quiz app" description="Have a fun!" />
+      <PageHeading title={INDEX_TITLE} description={INDEX_DESCRIPTION} />
+
       <Quizzes
         quizzes={quizzes?.result as Quizz[]}
         errorMsg={(quizzes as APIError)?.errorMsg}
