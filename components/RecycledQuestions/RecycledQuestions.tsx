@@ -37,7 +37,7 @@ const RecycledQuestions = ({
       const uniqueRecycledQuestions: any = makeArrayUnique({
         unique: questions,
         notSameAs,
-        uniqueProperty: "id",
+        uniqueProperty: ["id", "question"],
       });
 
       setRecycledQuestions(uniqueRecycledQuestions);

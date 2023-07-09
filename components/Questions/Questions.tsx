@@ -40,7 +40,7 @@ const Questions = ({
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mt-2 flex items-center justify-start flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2">
         {/** BTN - Open modal for add question */}
         <Button

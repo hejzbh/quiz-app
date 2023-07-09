@@ -50,7 +50,7 @@ export interface SaveInLocalStorageParams {
 export interface MakeArrayUniqueParams {
   unique: any[];
   notSameAs: any;
-  uniqueProperty?: string;
+  uniqueProperty?: string[];
 }
 
 export interface CalculateWinrateProps {

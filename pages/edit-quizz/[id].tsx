@@ -33,7 +33,7 @@ const QuizzPage = ({ quizzDetails, recycledQuestions }: QuizzPageProps) => {
     <>
       <PageSEO title={(quizzDetails as Quizz)?.name || SEO_EDIT_QUIZZ} />
       <PageHeading title={(quizzDetails as Quizz)?.name || "Not found"} />
-      <Container>
+      <Container className="flex items-center justify-center">
         {/** If we got correct quizz details render QuizzDetails component, otherwise render not found */}
         {(quizzDetails as Quizz)?.id ? (
           <QuizzDetails
@@ -43,7 +43,11 @@ const QuizzPage = ({ quizzDetails, recycledQuestions }: QuizzPageProps) => {
             recycledQuestions={recycledQuestions}
           />
         ) : (
-          <NotFound title={(quizzDetails as APIError)?.errorMsg as string} />
+          <NotFound
+            title={
+              ((quizzDetails as APIError)?.errorMsg as string) || "Not Found"
+            }
+          />
         )}
       </Container>
     </>

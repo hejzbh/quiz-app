@@ -61,9 +61,11 @@ export const sameObjects = (obj1: any, obj2: any) => {
   return Object.keys(obj1).every((key) => obj2[key] === obj1[key]);
 };
 
-export const arrayIncludes = (arr: any[], value: any, property?: string) =>
+export const arrayIncludes = (arr: any[], value: any, property?: string[]) =>
   arr?.some((arrayValue) =>
-    property ? arrayValue[property] == value[property] : arrayValue == value
+    property
+      ? property.some((property) => arrayValue[property] == value[property])
+      : arrayValue == value
   ); // == instead of === is because i dont want to check by type, only for value, imagine situation "1" and 1, in this function that is SAME
 
 export const makeArrayUnique = ({

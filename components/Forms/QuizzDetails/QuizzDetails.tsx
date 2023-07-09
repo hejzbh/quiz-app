@@ -252,7 +252,7 @@ const QuizzDetails = ({
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex flex-col space-y-10">
         {sortFieldByTabs(createQuizzFormFields)?.map(
           (
