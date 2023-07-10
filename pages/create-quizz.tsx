@@ -2,11 +2,12 @@
 import React, { ReactElement } from "react";
 // Next
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 // SEO messages
 import { SEO_CREATE_QUIZZ_TITLE } from "@/messages/seo";
 // API
 import { fetchAPI } from "@/api/fetchAPI";
-// INterfaces & Enums
+// Interfaces & Enums
 import { APIEndpoints, APIMethods } from "@/ts/enums";
 import { Question } from "@/ts/interfaces";
 import { getRecycledQuestions } from "@/utils/helpers";
@@ -22,13 +23,18 @@ interface CreateQuizzPage {
 }
 
 const CreateQuizzPage = ({ recycledQuestions }: CreateQuizzPage) => {
-  console.log(recycledQuestions);
+  const router = useRouter();
+
   return (
     <>
       <PageSEO title={SEO_CREATE_QUIZZ_TITLE} />
       <PageHeading title="Create Quizz" />
       <Container>
-        <QuizzDetails type="add" recycledQuestions={recycledQuestions} />
+        <QuizzDetails
+          type="add"
+          recycledQuestions={recycledQuestions}
+          onSubmit={() => router.push("/")}
+        />
       </Container>
     </>
   );
